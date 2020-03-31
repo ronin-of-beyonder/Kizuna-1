@@ -16,7 +16,7 @@ pub struct FirstName {
 }
 
 impl FirstName {
-    pub fn new(first_namte: String) -> Self {
+    pub fn new(first_name: String) -> Self {
         FirstName {
             name: first_name
         }
