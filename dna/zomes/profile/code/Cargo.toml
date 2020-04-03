@@ -1,5 +1,5 @@
 [package]
-name = "connect"
+name = "profile"
 version = "0.1.0"
 authors = ["hc-scaffold-framework"]
 edition = "2018"
