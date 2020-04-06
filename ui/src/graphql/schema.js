@@ -1,8 +1,9 @@
 import gql from "graphql-tag";
 
 export default gql`
-  type FirstName {
-    id: ID
-    name: String
+  type Profile {
+    firstName: String,
+    lastName: String,
+    email: String
   }
 `;
