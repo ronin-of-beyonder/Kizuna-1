@@ -24,7 +24,7 @@ const conductorConfig = Config.gen(
     // to instantiate a sim2h_server
     network: {
       type: 'sim2h',
-      sim2h_url: 'ws://localhost:8888',
+      sim2h_url: 'ws://localhost:9000',
     },
   })
 
@@ -50,11 +50,11 @@ orchestrator.registerScenario("call create_profile then get_profile", async (s, 
   // Make a call to a Zome function create_profile
   // indicating the function, and passing it the argument
   // FROM TATS: the first argument is the nickname I assigned in line 13. then zome name then zome call name.
-  const profile_addr = await alice.call("kizuna_dna", "profile", "create_profile", {
-    first_name : "tatsuya",
-    last_name: "sato",
-    email: "tatsuya.g.sato@gmail.com"
-  })
+  const profile_addr = await alice.call("kizuna_dna", "profile", "create_profile", {"profile_input" : {
+    "first_name":"tatsuya",
+    "last_name":"sato",
+    "email":"tatsuya.g.sato@gmail.com"
+  }})
 
   // TATS: check if the profile_addr returns Ok from rust
   t.ok(profile_addr.Ok)
@@ -64,9 +64,12 @@ orchestrator.registerScenario("call create_profile then get_profile", async (s, 
 
   // TATS: now, let's try to get the entry content created with the result_create_profile with bob using get_profile call
   // the profile_addr.Ok contains the address of the profile entry committed since create_profile returns the addr of the committed entry. 
-  const result = await bob.call("kizuna_dna", "profile", "get_profile", {"address": profile_addr.Ok})
+  const result = await bob.call("kizuna_dna", "profile", "get_profile", {"id": profile_addr.Ok})
+  // const list_result = await bob.call("kizuna_dna", "profile", "list_notes", {})
 
   // check for equality of the actual and expected results
+  // t.deepEqual(list_result.Ok.length, 1)
+  // failing right now
   t.deepEqual(result, { Ok: { App: [ 'Profile', '{"first_name": "tatsuya", "last_name": "sato", "email": "tatsuya.g.sato@gmail.com"}' ] } })
 })
 
