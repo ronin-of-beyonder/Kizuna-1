@@ -8,18 +8,16 @@ import {
   IonItem,
   IonInput,
   IonButton,
-  IonLabel
+  IonLabel,
 } from "@ionic/react";
 import React, { useState } from "react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Home.css";
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import LIST_PROFILES_QUERY from '../graphql/listProfilesQuery';
-import CREATE_PROFILE_MUTATION from '../graphql/createProfileMutation';
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 interface Profile {
-  first_name: String,
+  first_name: String;
 }
 
 const Home: React.FC = () => {
@@ -27,9 +25,6 @@ const Home: React.FC = () => {
   const [LN, setLN] = useState("");
   const [EA, setEA] = useState("");
 
-  const { data: { listProfiles } = { listProfiles: [] } } = useQuery(LIST_PROFILES_QUERY);
-  const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, { refetchQueries: [{ query: LIST_PROFILES_QUERY }]})
-  
   return (
     <IonPage>
       <IonHeader>
@@ -46,21 +41,29 @@ const Home: React.FC = () => {
 
         <IonList>
           <IonItem>
-            <IonInput value={FN} placeholder="Enter First Name" onIonChange={e => setFN(e.detail.value!)}></IonInput>
+            <IonInput
+              value={FN}
+              placeholder="Enter First Name"
+              onIonChange={(e) => setFN(e.detail.value!)}
+            ></IonInput>
           </IonItem>
           <IonItem>
-            <IonInput value={LN} placeholder="Enter Last Name" onIonChange={e => setLN(e.detail.value!)}></IonInput>
+            <IonInput
+              value={LN}
+              placeholder="Enter Last Name"
+              onIonChange={(e) => setLN(e.detail.value!)}
+            ></IonInput>
           </IonItem>
           <IonItem>
-            <IonInput value={EA} placeholder="Enter Email" onIonChange={e => setEA(e.detail.value!)}></IonInput>
+            <IonInput
+              value={EA}
+              placeholder="Enter Email"
+              onIonChange={(e) => setEA(e.detail.value!)}
+            ></IonInput>
           </IonItem>
         </IonList>
 
-        <IonButton size={'large'} onClick={() => {
-          console.log('clicked')
-          createProfile({ variables: { profileInput: { first_name: FN, last_name: LN, email: EA } }})}
-          }
-        >
+        <IonButton size={"large"} onClick={() => {}}>
           Submit
         </IonButton>
 
@@ -70,17 +73,10 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonList>
-          {listProfiles !== null ? listProfiles.map((profile: Profile) => 
-            <IonItem>
-              <IonLabel>{profile.first_name}</IonLabel>
-            </IonItem>
-            ) : null}
-        </IonList>
-
+        <IonList> </IonList>
       </IonContent>
     </IonPage>
-  )
+  );
 };
 
 export default Home;
