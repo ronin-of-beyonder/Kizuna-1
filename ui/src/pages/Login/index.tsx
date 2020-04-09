@@ -10,13 +10,7 @@ import { withRouter } from "react-router-dom";
 import React, { useState } from "react";
 import styles from "./style.module.css";
 
-const Login = ({
-  history,
-}: {
-  history: {
-    push: (param: string | { pathname: string; state?: object }) => void;
-  };
-}) => {
+const Login = ({ history }: { history: any }) => {
   const [email, setEmail] = useState("");
 
   const handleOnSubmit = () => {
